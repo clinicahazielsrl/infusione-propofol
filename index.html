@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Calcolo Infusione Propofol</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+    }
+    h2 {
+      text-align: center;
+      color: #0077cc;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 10px;
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #005fa3;
+    }
+    .result {
+      margin-top: 30px;
+      background-color: #e6f2ff;
+      padding: 15px;
+      border-left: 5px solid #0077cc;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Calcolo Velocità di Infusione Propofol (ml/ora)</h2>
+
+  <label for="peso">Peso del cane (kg):</label>
+  <input type="number" id="peso" step="0.1">
+
+  <label for="dose">Dose di Propofol (mg/kg/min):</label>
+  <input type="number" id="dose" step="0.001">
+
+  <label for="durata">Durata infusione (ore):</label>
+  <input type="number" id="durata" step="0.1">
+
+  <label for="volume">Volume finale flebo (ml):</label>
+  <input type="number" id="volume" step="1">
+
+  <button onclick="calcola()">Calcola</button>
+
+  <div class="result" id="risultato"></div>
+
+  <script>
+    function calcola() {
+      const peso = parseFloat(document.getElementById('peso').value);
+      const dose = parseFloat(document.getElementById('dose').value);
+      const durata = parseFloat(document.getElementById('durata').value);
+      const volume = parseFloat(document.getElementById('volume').value);
+
+      const concentrazione = 10; // mg/ml, fisso per Propofol
+
+      const doseTotaleMg = dose * peso * 60 * durata;
+      const volumePropofol = doseTotaleMg / concentrazione;
+      const velocitaMlOra = volume / durata;
+
+      document.getElementById('risultato').innerHTML = `
+        <strong>Risultati:</strong><br>
+        Volume Propofol da diluire: ${volumePropofol.toFixed(2)} ml<br>
+        (rimuovere dalla flebo volume equivalente di NaCl)<br>
+        Velocità di infusione: ${velocitaMlOra.toFixed(2)} ml/ora
+      `;
+    }
+  </script>
+</body>
+</html>
